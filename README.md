@@ -21,33 +21,35 @@ My project of a blackjack robot is not a unique idea. Jason Mecham (Github User 
 A classification model was trained with the supplied dataset to gain experience with the NVIDIA Digits platform. Googlenet was selected as the Convolutional Neural Network (CNN) architecture based off its accolades- placing 1st in the ImageNet Large Scale Visual Recognition Challenge(ILSVRC)- and its low Top 5 Error Rate of 6.67% <a href=https://medium.com/@sidereal/cnns-architectures-lenet-alexnet-vgg-googlenet-resnet-and-more-666091488df5Das>(Das, S 2017)</a>. The parameters (seen below) were established through default parameters from <a href=https://developer.nvidia.com/embedded/twodaystoademo> NVIDIA’s tutorial </a> and experimentation:
 
 
-Optimizer: SGD (Stochastic Gradient Descent)
+**Optimizer:** SGD (Stochastic Gradient Descent)
 
-Learning Rate: 0.001
+**Learning Rate:** 0.001
 
-Epochs: 15 
+**Epochs:** 15 
 
-Batch Size: Default
+**Batch Size:** Default
 
-Validation Dataset Size: 10%
+**Validation Dataset Size:** 10%
 
-Test Dataset Size: 5% 
+**Test Dataset Size:** 5% 
 
 
 The Googlenet mode did not converge when trained with the Blackjack dataset. Alexnet - the 2012 ILSVRC winner with a Top 5 Error Rate 15.3% -  performed with a high degree of accuracy after 33 epochs. In the previous model, the optimizer selected was SGD. When using Alexnet the Adams optimizer was chosen as it has a lower training and validation error when compared to SGD <a href=https://shaoanlu.wordpress.com/2017/05/29/sgd-all-which-one-is-the-best-optimizer-dogs-vs-cats-toy-experiment/>(Shaoanlu 2017)</a>. A lower Learning Rate and more Epochs were selected to ensure a good convergence, and because computation cost was not an issue. Again, the other parameters selected were based off the Digits Tutorial and experimentation. 
 
 
-Optimizer: Adams
+**Optimizer:** Adams
 
-Learning Rate: 0.00001
+**Learning Rate:** 0.00001
 
-Epochs: 33
+**Epochs:** 33
 
-Batch Size: Default
+**Batch Size:** Default
 
-Validation Dataset Size: 10%
+**Validation Dataset Size:** 10%
 
-Test Dataset Size: 5% 
+**Test Dataset Size:** 5% 
+
+
 <figure>  <figcaption>Training for AlexNet</figcaption>
 <img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/training.PNG" description="Training for AlexNet"></img>
 </figure>
@@ -123,12 +125,49 @@ Testing with the imagenet-camera has some issues, which were not recorded but wi
 
 ## Discussion
 
-The accuracy of the model was excellent, extremely close to that of the first GoogleNet CNN. I think these results were based off the data augmentation. The augmentation highlighted the important patterns for classification to the CNN. It allowed for the position of the playing card to vary without any loss to the accuracy of the model. “Garbage in , garbage out” . When testing with the JetsonTX2 Camera, issues arose due to the shadows on the playing surface. The testing apparatus was moved multiple times, for video of the testing, and the introduced shadows on the image seemed to affect the model’s classification.  
+The accuracy of the model was excellent, extremely close to that of the first GoogleNet CNN. I think these results were based off the data augmentation. The augmentation highlighted the important patterns for classification to the CNN. It allowed for the position of the playing card to vary without any loss to the accuracy of the model. A wise simulation engineer use to say “Garbage in , garbage out” .
+
+The decisions made by the robot were decided by the running total; if < 15 the robot will say hit, if > 15 the robot will stay and if > 21 the game is over. Below is a snipped of the <a href="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/Scripts/imagenet-camera.cpp">C++ script</a> for decision-making. 
+
+```cpp
+  if( total < 15 ){
+                gpioSetValue(greenLED,on);
+                cout << "\n \n Hit Me!Total " << total << "\nPress Enter \n \n";
+                cin.ignore();
+                gpioSetValue(greenLED,off);
+            }
+
+
+            else if((total>15) && (total<=21)){
+                gpioSetValue(redLED,on);
+                cout << "\n \n Stay! Total " << total << "\nDeal new cards and Press Enter to Play again \n \n";
+                cin.ignore();
+                gpioSetValue(redLED,off);
+                total=0;
+            }
+
+
+            else if (total>21){
+                cout << "\n \n OVER!!! Total " << total << "\nDeal new cards and Press Enter to Play again \n \n ";
+                for(int i=0; i<10; i++){
+                    usleep(200000);
+                    gpioSetValue(redLED,on);
+                    gpioSetValue(greenLED,on);
+                    usleep(200000);
+                    gpioSetValue(greenLED,off);
+                    gpioSetValue(redLED,off);
+                }
+                cin.ignore();
+                total=0;
+            }
+
+```
+
+When testing with the JetsonTX2 Camera, issues arose due to the shadows on the playing surface. The testing apparatus was moved multiple times, for video of the testing, and the introduced shadows on the image seemed to affect the model’s classification.  
 
 ## Conclusion
 
 Adding a detectnet would be useful for multiple classifications of cards. Adding a card counting algorithm, to make a robot that wins more games is important for Vegas. The next iteration will not look to measure the machine based on the accuracy of its classification but on the percentage of wins vs losses in a game of Blackjack. My fingerless Uncle is looking forward to the next iteration of this robot. 
-
 
 
 ## Sources
