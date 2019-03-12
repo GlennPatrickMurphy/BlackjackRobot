@@ -57,18 +57,18 @@ Test Dataset Size: 5%
 
 Image data of playing cards was collected using the camera on the Jetson TX2. The script ,  took 20 photos for each category of card ( so 20 images of Kings, 20 images of Queens… ). These images were converted to Grayscale, the suit did not matter and therefore color was irrelevant when categorizing. Since 20 images for each category is to little, the dataset was expanded using a list of data augmentation techniques based off this Medium Post <a href=https://medium.com/nanonets/how-to-use-deep-learning-when-you-have-limited-data-part-2-data-augmentation-c26971dc8ced> (Raj 2018)</a>.
 
-<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1.PNG" description="Original Image"></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1.png" Title="Original Image"></img>
 -Flip
-<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1_flipped.PNG" description="Flipped Image"></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1_flipped.png" Title="Flipped Image"></img>
 -Rotation (From -90° to 90° with a step size of 14)
-<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1_rotated.PNG" description="Rotated Image"></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1_rotated.png" Title="Rotated Image"></img>
 -Scale (90%, 75% and 60% scale)
-<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1scaled1.PNG" description="Scaled Image"></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1scaled1.png" Title="Scaled Image"></img>
 -Translation (20% Translate in all directions)
-<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1translated1.PNG" description="Translated Image"></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1translated1.png" Title="Translated Image"></img>
 -Noise (Gaussian & Salt and Pepper)
-<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1_gaus.PNG" description="Gaussian Image" ></img>
-<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1_saltpepper.PNG" description="Salt&Pepper Image"></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1_gaus.png" Title="Gaussian Image" ></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1_saltpepper.png" Title="Salt&Pepper Image"></img>
 
 Not only did this increase the dataset, it highlighted the patterns on the cards that CNN would use to categories. Here is the augmentation and data acquisition <a href="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/Scripts/camera.py">script</a> developed.
 
