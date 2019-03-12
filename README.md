@@ -35,7 +35,7 @@ Validation Dataset Size: 10%
 Test Dataset Size: 5% 
 
 
-<img src=media/images/googlenet></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/10inferenceScreenShot.png"></img>
 
 
 The Googlenet mode did not converge when trained with the Blackjack dataset. Alexnet - the 2012 ILSVRC winner with a Top 5 Error Rate 15.3% -  performed with a high degree of accuracy after 33 epochs. In the previous model, the optimizer selected was SGD. When using Alexnet the Adams optimizer was chosen as it has a lower training and validation error when compared to SGD <a href=https://shaoanlu.wordpress.com/2017/05/29/sgd-all-which-one-is-the-best-optimizer-dogs-vs-cats-toy-experiment/>(Shaoanlu 2017)</a>. A lower Learning Rate and more Epochs were selected to ensure a good convergence, and because computation cost was not an issue. Again, the other parameters selected were based off the Digits Tutorial and experimentation. 
