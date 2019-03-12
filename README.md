@@ -3,10 +3,10 @@
 
 ## Abstract
 
-#### In this GitHub repository, I show the Blackjack Robot I developed with a Jetson TX2 using AlexNet Model trained on Nvidia Digits. Once the Jetson classified the playing card, though its onboard camera, a decision was outputted to a green (Hit!) and red light (Stay). The playing card dataset, used to train the AlexNet Model, was augmented through a python script. The robot has an accuracy of 84% and classified these images with an average time of 3s. This repository shows and explains the decisions behind: the creation of the playing card dataset, the training of the classification model, and the programming of the decision-making capabilities. 
+#### In this GitHub repository, I show the Blackjack Robot I developed with a Jetson TX2 using AlexNet Model trained on Nvidia Digits. Once the Jetson classified the playing card, though its onboard camera, a decision was outputted to a green (Hit!) and red light (Stay). The playing card dataset, used to train the AlexNet Model, was augmented through a python script. The robot has an accuracy of 84% and classified these images with about 16ms (seen on the Imagenet-Camera). This repository shows and explains the decisions behind: the creation of the playing card dataset, the training of the classification model, and the programming of the decision-making capabilities. 
 
 
-<img style="text-align:center;" src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/video/BlackJackRobot_Demo1.gif"></img>
+<img style="text-align:center;" src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/video/BlackJackRobot_Demo1.gif" description="Demo Of Robot"></img>
 
 ## History
 
@@ -33,9 +33,6 @@ Validation Dataset Size: 10%
 Test Dataset Size: 5% 
 
 
-<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/10inferenceScreenShot.png"></img>
-
-
 The Googlenet mode did not converge when trained with the Blackjack dataset. Alexnet - the 2012 ILSVRC winner with a Top 5 Error Rate 15.3% -  performed with a high degree of accuracy after 33 epochs. In the previous model, the optimizer selected was SGD. When using Alexnet the Adams optimizer was chosen as it has a lower training and validation error when compared to SGD <a href=https://shaoanlu.wordpress.com/2017/05/29/sgd-all-which-one-is-the-best-optimizer-dogs-vs-cats-toy-experiment/>(Shaoanlu 2017)</a>. A lower Learning Rate and more Epochs were selected to ensure a good convergence, and because computation cost was not an issue. Again, the other parameters selected were based off the Digits Tutorial and experimentation. 
 
 
@@ -51,8 +48,8 @@ Validation Dataset Size: 10%
 
 Test Dataset Size: 5% 
 
-<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/training.PNG"></img>
-<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/training%26learning.PNG"></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/training.PNG" description="Training for AlexNet"></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/training%26learning.PNG" description="Training and Learning Rate for AlexNet Image"></img>
 
 
 
@@ -60,30 +57,38 @@ Test Dataset Size: 5%
 
 Image data of playing cards was collected using the camera on the Jetson TX2. The script ,  took 20 photos for each category of card ( so 20 images of Kings, 20 images of Queens… ). These images were converted to Grayscale, the suit did not matter and therefore color was irrelevant when categorizing. Since 20 images for each category is to little, the dataset was expanded using a list of data augmentation techniques based off this Medium Post <a href=https://medium.com/nanonets/how-to-use-deep-learning-when-you-have-limited-data-part-2-data-augmentation-c26971dc8ced> (Raj 2018)</a>.
 
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1.PNG" description="Original Image"></img>
 -Flip
--Rotation
--Scale
--Crop
--Translation
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1_flipped.PNG" description="Flipped Image"></img>
+-Rotation (From -90° to 90° with a step size of 14)
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1_rotated.PNG" description="Rotated Image"></img>
+-Scale (90%, 75% and 60% scale)
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1scaled1.PNG" description="Scaled Image"></img>
+-Translation (20% Translate in all directions)
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1translated1.PNG" description="Translated Image"></img>
 -Noise (Gaussian & Salt and Pepper)
--Translation
- 
-Not only did this increase the dataset, it highlighted the patterns on the cards that CNN would use to categories.   
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1_gaus.PNG" description="Gaussian Image" ></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1_saltpepper.PNG" description="Salt&Pepper Image"></img>
+
+Not only did this increase the dataset, it highlighted the patterns on the cards that CNN would use to categories. Here is the augmentation and data acquisition <a href="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/Scripts/camera.py">script</a> developed.
 
 ## Results
 
-<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/GoogleNetTrainSGD.PNG"></img>
+The GoogleNet model, trained on the supplied dataset, achieved the accuracy and time requirements of 75% and >10ms.
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/GoogleNetTrainSGD.PNG" description="GoogleNet Evaluate"></img>
 
-The robotic decisions (Hit and Stay) were executed perfectly, see the example below. 
+For the The robotic decisions (Hit and Stay) were executed perfectly, see the example below. 
 
 <img style="text-align:center;" src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/video/BlackJackRobot_Demo2.gif"></img>
+
+Using the Imagenet-camera.cpp script it was seen that the classification time was >20ms.
 
 <img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/5inferenceScreenShot.png"></img>
 <img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/10inferenceScreenShot.png"></img>
 
-<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/FinalResults.png"></img>
+When testing the the model in the imagenet-console based off 50 new images taken (seperate from the training data) the robot had an accuracy of 84%. Here is the python testing <a href="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/Scripts/pval.py">script</a> created.
 
-When testing the the model in the imagenet-console based off 50 new images taken (seperate from the training data) the robot had an accuracy of 
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/FinalResults.png" description="Results of Robot-Inference"></img>
 
 Testing with the imagenet-camera has some issues, which were not recorded but will be discussed in the next section. 
 
