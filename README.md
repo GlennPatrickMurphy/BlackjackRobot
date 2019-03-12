@@ -3,7 +3,7 @@
 
 ## Abstract
 
-#### In this GitHub repository, I show the Blackjack Robot I developed with a Jetson TX2 using AlexNet Model trained on Nvidia Digits. Once the Jetson classified the playing card, though its onboard camera, a decision was outputted to a green (Hit!) and red light (Stay). The playing card dataset, used to train the AlexNet Model, was augmented through a python script. The robot has an accuracy of 84% and classified these images with about 16ms (seen on the Imagenet-Camera). This repository shows and explains the decisions behind: the creation of the playing card dataset, the training of the classification model, and the programming of the decision-making capabilities. 
+#### In this GitHub repository, I show the Blackjack Robot I developed with a Jetson TX2 using AlexNet Model trained on Nvidia Digits. Once the Jetson classified the playing card, though its onboard camera, a decision was outputted to a green (Hit!) and red (Stay) LED. The playing card dataset, used to train the AlexNet Model, was augmented through a python script. The robot has an accuracy of 84% and classified these images in, roughly, 20ms (seen on the Imagenet-Camera). This repository shows and explains the decisions behind: the creation of the playing card dataset, the training of the classification model, and the programming of the decision-making. 
 
 <figure>  <figcaption>Robot Demo #1</figcaption>
 <img style="text-align:center;" src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/video/BlackJackRobot_Demo1.gif" description="Demo Of Robot"></img>
@@ -11,9 +11,9 @@
 
 ## History
 
-Blackjack is a card game with the objective to collect cards till one reaches, or gets as close as possible to a total of 21.  It is a game of chance. Unless, one has a unique mathematical skill to count cards. The ability to count cards is difficult to ascertain: counting cards demands quick calculations and keen, inconspicuous, observations. Humans require years of training to develop these skills. Robots,with the right computation power, only need a few hours to count cards. Quick calculations are innate to a computer and- with advances in machine learning and pattern recognition- a robot can develop keen observations skills. My goal with my robot is to develop a robot which will always win at Blackjack and make me millions in Vegas. 
+Blackjack is a card game with the objective to collect cards till one reaches, or gets as close as possible to a total of 21.  It is a game of chance. Unless, one has a unique mathematical skill to count cards. The ability to count cards is difficult to ascertain: counting cards demands quick calculations and keen (inconspicuous) observations. Humans require years of training to develop these skills. Robots, with the right computation power, only need a few hours to count cards. Quick calculations are innate to a computer and- with advances in machine learning and pattern recognition- a robot can develop keen observations skills. My goal with my robot is to develop a robot which will always win at Blackjack and make me millions in Vegas. 
 
-My project of a blackjack robot is not a unique idea. Jason Mecham (Github User S4WRXTTCS) demonstrates in his Jetson-Inference repository <a href=https://github.com/S4WRXTTCS/jetson-inference>(S4WRXTTCS)</a> his Blackjack program. Mecham’s program both detects and classifies playing cards on a table: the detection and classification is completed through the combination of ImageNet and DetectNet. Another unique feature of Mecham’s model is classification of playing cards’ include the suit of the card. For simplicity my model will only be using ImageNet. The suit of the card, per my understanding, is not important in blackjack, therefore my model will only classify the count of the playing card.  
+My project of a blackjack robot is not a unique idea. Jason Mecham (Github User S4WRXTTCS) demonstrates in his Jetson-Inference repository <a href=https://github.com/S4WRXTTCS/jetson-inference>(S4WRXTTCS)</a> his Blackjack program. Mecham’s program both detects and classifies playing cards on a table: the detection and classification is completed through the combination of ImageNet and DetectNet. Another unique feature of Mecham’s model is the classification of playing cards’ include the suit of the card. For simplicity my model will only be using ImageNet. The suit of the card (per my understanding) is not important in blackjack, therefore my model will only classify the count of the playing card.  
 
 
 ## Background 
@@ -60,7 +60,7 @@ The Googlenet mode did not converge when trained with the Blackjack dataset. Ale
 
 ## Data Aq
 
-Image data of playing cards was collected using the camera on the Jetson TX2. The script ,  took 20 photos for each category of card ( so 20 images of Kings, 20 images of Queens… ). These images were converted to Grayscale, the suit did not matter and therefore color was irrelevant when categorizing. Since 20 images for each category is to little, the dataset was expanded using a list of data augmentation techniques based off this Medium Post <a href=https://medium.com/nanonets/how-to-use-deep-learning-when-you-have-limited-data-part-2-data-augmentation-c26971dc8ced> (Raj 2018)</a>.
+Image data of playing cards was collected using the camera on the Jetson TX2. The script ,  took 20 photos for each category of card ( so 20 images of Kings, 20 images of Queens… ). These images were converted to Grayscale: the suit did not matter and therefore color was irrelevant when categorizing. Since 20 images for each category is to small of a dataset for training, the dataset was expanded using a list of data augmentation techniques based off this Medium Post <a href=https://medium.com/nanonets/how-to-use-deep-learning-when-you-have-limited-data-part-2-data-augmentation-c26971dc8ced> (Raj 2018)</a>.
 
 <figure>  <figcaption>Original Image</figcaption>
 <img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/1.png" Title="Original Image"></img>
@@ -93,11 +93,11 @@ Image data of playing cards was collected using the camera on the Jetson TX2. Th
 </figure>
 
 
-Not only did this increase the dataset, it highlighted the patterns on the cards that CNN would use to categories. Here is the augmentation and data acquisition <a href="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/Scripts/camera.py">script</a> developed.
+Not only did this increase the dataset, it highlighted the important characteristics of the cards for the CNN. Here is the augmentation and data acquisition <a href="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/Scripts/camera.py">script</a> developed.
 
 ## Results
 
-The GoogleNet model, trained on the supplied dataset, achieved the accuracy and time requirements of 75% and >10ms.
+The GoogleNet model, trained on the supplied dataset, achieved the accuracy and time requirements of 75% and <10ms.
 <figure>  <figcaption>GoogleNet Evaluate</figcaption>
 <img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/GoogleNetTrainSGD.PNG" description="GoogleNet Evaluate"></img>
 </figure>
@@ -108,7 +108,7 @@ For the The robotic decisions (Hit and Stay) were executed perfectly, see the ex
 <img style="text-align:center;" src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/video/BlackJackRobot_Demo2.gif"></img>
 </figure>
 
-Using the Imagenet-camera.cpp script it was seen that the classification time was >20ms.
+Using the Imagenet-camera.cpp script it was seen that the classification time was <=20ms.
 
 <figure>  <figcaption>Inference Results for Blackjack Robot</figcaption>
 <img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/5inferenceScreenShot.png"></img>
@@ -125,9 +125,9 @@ Testing with the imagenet-camera has some issues, which were not recorded but wi
 
 ## Discussion
 
-The accuracy of the model was excellent, extremely close to that of the first GoogleNet CNN. I think these results were based off the data augmentation. The augmentation highlighted the important patterns for classification to the CNN. It allowed for the position of the playing card to vary without any loss to the accuracy of the model. A wise simulation engineer use to say “Garbage in , garbage out” .
+The accuracy of the model was excellent, and extremely close to that of the first GoogleNet CNN. During the initial testing of Blackjack CNN, a dataset- which was the same size of the final dataset- that had no augmentation was used. The Blackjack CNN trained on this dataset had a high error rate when testing. Based off this, one believes the low error rate is due to the data augmentation. The augmentation highlighted the important patterns for classification to the CNN. It allowed for the position of the playing card to vary without any loss to the accuracy of the model. A wise simulation engineer use to say when reffering to testing and training setups, “Garbage in , garbage out” .
 
-The decisions made by the robot were decided by the running total; if < 15 the robot will say hit, if > 15 the robot will stay and if > 21 the game is over. Below is a snipped of the <a href="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/Scripts/imagenet-camera.cpp">C++ script</a> for decision-making. 
+The decisions made by the robot were based off the running total; if < 15 the robot will say hit, if > 15 the robot will stay and if > 21 the game is over. Below is a snipped of the <a href="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/Scripts/imagenet-camera.cpp">C++ script</a> for decision-making. 
 
 ```cpp
   if( total < 15 ){
@@ -163,11 +163,11 @@ The decisions made by the robot were decided by the running total; if < 15 the r
 
 ```
 
-When testing with the JetsonTX2 Camera, issues arose due to the shadows on the playing surface. The testing apparatus was moved multiple times, for video of the testing, and the introduced shadows on the image seemed to affect the model’s classification.  
+When testing with the JetsonTX2 Camera, issues arose due to the shadows on the playing surface. The testing apparatus was moved multiple times (for the demo videos) and the introduced shadows. These shadows on the cameara image seemed to affect the model’s classification.  
 
 ## Conclusion
 
-Adding a detectnet would be useful for multiple classifications of cards. Adding a card counting algorithm, to make a robot that wins more games is important for Vegas. The next iteration will not look to measure the machine based on the accuracy of its classification but on the percentage of wins vs losses in a game of Blackjack. My fingerless Uncle is looking forward to the next iteration of this robot. 
+Adding a detectnet would be useful for parallel classifications of cards. Adding a card counting algorithm, to make a robot that wins more games, is important for Vegas. The next iteration will not look to measure the machine based on the accuracy of its classification, but on the percentage of wins vs losses in a game of Blackjack. My fingerless Uncle is looking forward to the next iteration of this robot, he has a lot riding on this. 
 
 
 ## Sources
