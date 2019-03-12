@@ -5,7 +5,7 @@
 
 #### In this GitHub repository, I show the Blackjack Robot I developed with a Jetson TX2 using AlexNet Model trained on Nvidia Digits. Once the Jetson classified the playing card, though its onboard camera, a decision was outputted to a green (Hit!) and red light (Stay). The playing card dataset, used to train the AlexNet Model, was augmented through a python script. The robot has an accuracy of 84% and classified these images with an average time of 3s. This repository shows and explains the decisions behind: the creation of the playing card dataset, the training of the classification model, and the programming of the decision-making capabilities. 
 
-<video src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/video/WIN_20190308_22_20_14_Pro.mp4" title="source: imgur.com" /></video>
+<video src="https://drive.google.com/open?id=1AZ21WuVDXyGDw6l7zEQxYLUAaicqQcBw" title="Demo #1" /></video>
 
 
 ## History
