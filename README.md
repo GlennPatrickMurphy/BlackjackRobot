@@ -53,8 +53,8 @@ Validation Dataset Size: 10%
 
 Test Dataset Size: 5% 
 
-<img src="../media/images/training"></img>
-<img src=media/images/training&learning></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/training.PNG"></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/training%26learning.PNG"></img>
 
 
 
@@ -74,14 +74,14 @@ Not only did this increase the dataset, it highlighted the patterns on the cards
 
 ## Results
 
-<img src=media/images/GoogleNetTrainSGD></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/GoogleNetTrainSGD.PNG"></img>
 
 The robotic decisions (Hit and Stay) were executed perfectly, see the example below. 
 
-<img src=media/images/5inferenceScreenShot></img>
-<img src=media/images/10inferenceScreenShot></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/5inferenceScreenShot.png"></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/10inferenceScreenShot.png"></img>
 
-<img src=media/images/FinalResults></img>
+<img src="https://github.com/GlennPatrickMurphy/BlackjackRobot/blob/master/media/images/FinalResults.png"></img>
 
 When testing the the model in the imagenet-console based off 50 new images taken (seperate from the training data) the robot had an accuracy of 
 
