@@ -53,7 +53,7 @@ Validation Dataset Size: 10%
 
 Test Dataset Size: 5% 
 
-<img src=media/images/training></img>
+<img src="../media/images/training"></img>
 <img src=media/images/training&learning></img>
 
 
